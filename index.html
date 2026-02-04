@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          tajawal: ["Tajawal", "sans-serif"],
+        }
+      }
+    }
+  }
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  body { font-family: 'Tajawal', sans-serif; }
+</style>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>24soqe | سوق السيارات</title>
+</head>
+<body class="bg-gradient-to-b from-gray-900 via-black to-gray-800 text-white">
+
+<!-- Navbar -->
+<nav class="flex items-center justify-between px-6 py-3 bg-black bg-opacity-70 shadow-lg">
+  <div class="flex items-center space-x-4 rtl:space-x-reverse">
+    <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-cyan-400 to-blue-500 p-1 animate-pulse shadow-lg">
+      <img src="assets/24Log.png" alt="24soqe Logo" class="w-full h-full object-cover rounded-full border-2 border-white shadow">
+    </div>
+    <h1 class="text-2xl font-bold text-red-500">24soqe</h1>
+  </div>
+ <div class="space-x-4 rtl:space-x-reverse flex items-center gap-4" id="auth-buttons">
+
+  <!-- سيتم توليد الأزرار حسب حالة المستخدم -->
+</div>
+ 
+
+</nav>
+
+<!-- Hero -->
+<section class="text-center py-20 px-4 bg-gradient-to-r from-gray-900 to-gray-800">
+  <h2 class="text-4xl md:text-5xl font-bold mb-4">مرحبًا بك في أكبر سوق لبيع وشراء السيارات</h2>
+  <p class="text-lg text-gray-300 mb-8">اعرض سيارتك خلال دقائق، أو ابحث عن سيارة أحلامك</p>
+  <div class="flex flex-col md:flex-row justify-center gap-4 max-w-2xl mx-auto">
+    <input type="text" placeholder="ماركة، موديل..." class="w-full px-4 py-3 rounded-xl text-black">
+    <button class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-bold">🔍 ابحث</button>
+  </div>
+</section>
+
+<!-- فلترة البحث -->
+
+
+<!-- السيارات المميزة -->
+<section class="py-16 px-6 max-w-6xl mx-auto">
+  <h3 class="text-3xl font-bold mb-8 text-center text-red-500">🚗سيارات للبيع</h3>
+  <div id="featured-cars" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
+</section>
+<section class="bg-gray-900 py-10 px-4 md:px-8">
+  <h3 class="text-2xl font-bold text-red-500 mb-6 text-center">🔎 فلتر البحث</h3>
+ <form id="filter-form" method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-6xl mx-auto text-black">
+
+  <select name="brand" class="rounded-xl p-3">
+    <option value="">اختر الماركة</option>
+    <option value="1">تويوتا</option>
+    <option value="2">نيسان</option>
+    <option value="3">هونداي</option>
+    <option value="4">كيا</option>
+    <option value="5">BMW</option>
+  </select>
+
+  <select name="model" class="rounded-xl p-3">
+    <option value="">اختر الموديل</option>
+    <option value="1">كورولا</option>
+    <option value="2">كامري</option>
+    <option value="3">صني</option>
+    <option value="4">النترا</option>
+    <option value="5">سبورتاج</option>
+    <option value="6">X5</option>
+  </select>
+
+  <select name="city" class="rounded-xl p-3">
+    <option value="">المدينة</option>
+    <option value="1">عمان</option>
+    <option value="2">الزرقاء</option>
+    <option value="3">اربد</option>
+    <option value="4">العقبة</option>
+  </select>
+
+  <input type="number" name="price_min" placeholder="السعر من" class="rounded-xl p-3">
+  <input type="number" name="price_max" placeholder="السعر إلى" class="rounded-xl p-3">
+
+  <select name="fuel" class="rounded-xl p-3">
+    <option value="">نوع الوقود</option>
+    <option value="1">بنزين</option>
+    <option value="2">ديزل</option>
+    <option value="3">كهرباء</option>
+    <option value="4">هايبرد</option>
+  </select>
+
+  <button type="submit" class="bg-red-600 text-white py-3 px-6 rounded-xl col-span-full hover:bg-red-700 font-bold mt-2">🔍 ابحث الآن</button>
+</form>
+
+</section>
+<!-- CTA -->
+<section class="text-center py-16 bg-red-600">
+  <h3 class="text-3xl font-bold mb-4">🚀 جاهز تبيع سيارتك؟</h3>
+  <p class="mb-6 text-white">انشر إعلانك الآن على 24soqe ووصّل سيارتك للمشتري الصح</p>
+  <a href="add-car.php" class="bg-white text-red-600 px-6 py-3 font-bold rounded-xl shadow hover:bg-gray-100">أضف إعلانك الآن</a>
+</section>
+
+<!-- Footer -->
+<footer class="bg-black text-gray-400 text-center py-6">
+  <p>&copy; 2024 24soqe. جميع الحقوق محفوظة.</p>
+</footer>
+
+<script>
+fetch('fetch_cars.php')
+  .then(response => response.json())
+  .then(data => {
+    const container = document.getElementById('featured-cars');
+    if (data.length === 0) {
+      container.innerHTML = '<p class="text-center text-gray-400">لا توجد سيارات لعرضها حالياً.</p>';
+      return;
+    }
+
+    container.innerHTML = data.map(car => `
+      <div class="bg-white text-black rounded-xl shadow overflow-hidden hover:scale-105 transition duration-300">
+       <img src="${car.image || 'assets/default_car.png'}" alt="Car" class="w-full h-56 object-cover">
+
+        <div class="p-4">
+          <h4 class="text-xl font-bold mb-1">${car.brand || 'ماركة غير محددة'} ${car.model || ''} ${car.year || ''}</h4>
+          <p class="text-gray-700 mb-1">${parseInt(car.price).toLocaleString()} دينار</p>
+          <p class="text-sm text-gray-500">${car.city || 'غير محددة'}</p>
+          <a href="car_details.php?id=${car.id}" class="text-blue-600 hover:underline text-sm">عرض التفاصيل</a>
+<form method="POST" action="wish_list.php" onsubmit="return handleWishList(event, ${car.id})">
+  <button type="submit" class="text-red-500 hover:text-red-700 text-sm mt-1">❤️ أضف للمفضلة</button>
+</form>
+
+        </div>
+      </div>
+    `).join('');
+  })
+  .catch(err => console.error('خطأ في جلب السيارات:', err));
+</script>
+<script>
+  const authButtons = document.getElementById('auth-buttons');
+  const loggedIn = localStorage.getItem('loggedIn') === 'true';
+
+  if (loggedIn) {
+    // المستخدم مسجل دخول
+   authButtons.innerHTML = `
+  <a href="my_wishlist.php" class="text-white hover:text-red-400">❤️ المفضلة</a>
+  <a href="#" onclick="logout()" class="text-white hover:text-red-500">تسجيل الخروج</a>
+  <a href="add-car.php" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl shadow">أضف إعلانك</a>
+`;
+
+  } else {
+    // مش مسجل دخول
+    authButtons.innerHTML = `
+      <a href="login.php" class="text-white hover:text-red-500">تسجيل الدخول</a>
+      <a href="signup.php" class="text-white hover:text-red-500">إنشاء حساب</a>
+      <a href="login.php" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl shadow">أضف إعلانك</a>
+    `;
+  }
+
+  function logout() {
+    localStorage.removeItem('loggedIn');
+    window.location.reload(); // نعيد تحميل الصفحة لتحديث الأزرار
+  }
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const loginLink = document.querySelector("a[href='login.php']");
+    const signupLink = document.querySelector("a[href='signup.php']");
+    const logoutBtn = document.createElement("a");
+    logoutBtn.textContent = "تسجيل الخروج";
+    logoutBtn.className = "text-white hover:text-red-500 cursor-pointer";
+    logoutBtn.onclick = function () {
+      localStorage.removeItem("loggedIn");
+      window.location.href = "index.html";
+    };
+
+    const addCarBtn = document.querySelector("a[href='add-car.php']");
+
+    const nav = document.querySelector("nav .space-x-4");
+
+    const isLoggedIn = localStorage.getItem("loggedIn") === "true";
+
+    if (isLoggedIn) {
+      if (loginLink) loginLink.remove();
+      if (signupLink) signupLink.remove();
+      nav.insertBefore(logoutBtn, addCarBtn);
+
+      // إتاحة زر إضافة إعلان
+      addCarBtn.href = "add-car.php";
+    } else {
+      // لا يستطيع الضغط على "أضف إعلانك" إلا بعد تسجيل الدخول
+      addCarBtn.href = "login.php";
+    }
+  });
+</script>
+<script>
+  function handleWishList(event, carId) {
+    event.preventDefault();
+    const loggedIn = localStorage.getItem('loggedIn') === 'true';
+    if (!loggedIn) {
+      alert("يجب تسجيل الدخول لإضافة السيارة إلى المفضلة.");
+      window.location.href = 'login.php';
+      return false;
+    }
+
+    // إرسال الطلب إلى wish_list.php باستخدام Fetch
+    fetch('wish_list.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `car_id=${carId}`
+    })
+    .then(response => response.text())
+    .then(msg => {
+      alert("✅ تم إضافة السيارة إلى المفضلة!");
+    })
+    .catch(err => {
+      console.error('فشل الإضافة إلى المفضلة:', err);
+      alert("❌ حدث خطأ أثناء إضافة السيارة.");
+    });
+
+    return false;
+  }
+</script>
+
+
+</body>
+</html>
