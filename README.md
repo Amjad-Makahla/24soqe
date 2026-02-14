@@ -22,4 +22,4 @@ All listings require admin approval before being published to ensure quality and
 - HTML / CSS
 - JavaScript
 
-🔒 Source code is private and available upon request.
+
